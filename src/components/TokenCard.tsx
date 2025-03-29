@@ -1,3 +1,4 @@
+'use client';
 
 import { useState } from 'react';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
@@ -46,17 +47,17 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
     setIsSubmitting(true);
     try {
       const success = await purchaseTokens(token.id, purchaseAmount);
-      
+
       if (success) {
         toast({
           title: "Purchase Successful",
           description: `You have successfully purchased ${purchaseAmount} ${token.symbol} tokens.`,
         });
-        
+
         if (onPurchase) {
           onPurchase(token, purchaseAmount);
         }
-        
+
         setIsPurchaseOpen(false);
       } else {
         toast({
@@ -97,7 +98,7 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
       'Rice': 'https://images.unsplash.com/photo-1586201375761-83865001e8c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
       'Cotton': 'https://images.unsplash.com/photo-1594632913636-cefa6260cce7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80',
     };
-    
+
     return placeholders[cropType] || 'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80';
   };
 
@@ -105,9 +106,9 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
     <>
       <Card className="overflow-hidden card-hover border-cropchain-gray/30 bg-white dark:bg-cropchain-dark">
         <div className="relative h-48 overflow-hidden">
-          <img 
-            src={getImagePlaceholder(token.cropType)} 
-            alt={token.name} 
+          <img
+            src={getImagePlaceholder(token.cropType)}
+            alt={token.name}
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
           <div className="absolute top-0 left-0 right-0 p-3 flex justify-between">
@@ -119,7 +120,7 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
             </Badge>
           </div>
         </div>
-        
+
         <CardHeader className="pb-2">
           <div className="flex justify-between items-start">
             <div>
@@ -132,7 +133,7 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
             </div>
           </div>
         </CardHeader>
-        
+
         <CardContent className="pb-3">
           <div className="flex justify-between text-sm mb-2">
             <div className="flex items-center">
@@ -144,7 +145,7 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
               <span className="text-cropchain-medium">{token.location.split(',')[0]}</span>
             </div>
           </div>
-          
+
           <div className="flex justify-between text-sm">
             <div className="flex items-center">
               <BarChart3 className="mr-1 h-3.5 w-3.5 text-cropchain-green" />
@@ -159,7 +160,7 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
             </div>
           </div>
         </CardContent>
-        
+
         <CardFooter className="pt-0 flex justify-between">
           <Button
             variant="outline"
@@ -169,7 +170,7 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
           >
             Details
           </Button>
-          
+
           {!viewOnly && (
             <Button
               variant="default"
@@ -189,32 +190,32 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
           <DialogHeader>
             <DialogTitle className="text-xl font-medium">{token.name}</DialogTitle>
           </DialogHeader>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
             <div>
-              <img 
-                src={getImagePlaceholder(token.cropType)} 
-                alt={token.name} 
+              <img
+                src={getImagePlaceholder(token.cropType)}
+                alt={token.name}
                 className="w-full h-48 object-cover rounded-md"
               />
             </div>
-            
+
             <div className="space-y-4">
               <div>
                 <h4 className="text-sm font-medium text-cropchain-medium">Token Symbol</h4>
                 <p className="font-semibold">{token.symbol}</p>
               </div>
-              
+
               <div>
                 <h4 className="text-sm font-medium text-cropchain-medium">Projected Yield</h4>
                 <p className="font-semibold">{token.projectedYield} bushels/acre</p>
               </div>
-              
+
               <div>
                 <h4 className="text-sm font-medium text-cropchain-medium">Harvest Date</h4>
                 <p className="font-semibold">{new Date(token.harvestDate).toLocaleDateString()}</p>
               </div>
-              
+
               <div>
                 <h4 className="text-sm font-medium text-cropchain-medium">Risk Assessment</h4>
                 <Badge className={`mt-1 ${getRiskBadgeColor(token.riskLevel)}`}>
@@ -223,9 +224,9 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
               </div>
             </div>
           </div>
-          
+
           <Separator className="my-1" />
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
             <div>
               <h4 className="text-sm font-medium text-cropchain-medium">Token Economics</h4>
@@ -244,7 +245,7 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
                 </div>
               </div>
             </div>
-            
+
             <div>
               <h4 className="text-sm font-medium text-cropchain-medium">Farming Location</h4>
               <div className="mt-2">
@@ -255,7 +256,7 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
               </div>
             </div>
           </div>
-          
+
           <div className="bg-cropchain-beige dark:bg-cropchain-dark/70 rounded-md p-4 mt-2">
             <div className="flex items-start">
               <AlertCircle className="h-5 w-5 text-cropchain-green mr-3 mt-0.5" />
@@ -267,9 +268,9 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
               </div>
             </div>
           </div>
-          
+
           {!viewOnly && (
-            <Button 
+            <Button
               className="w-full mt-2 bg-cropchain-green hover:bg-cropchain-green/90 text-white"
               onClick={() => {
                 setIsDetailsOpen(false);
@@ -288,7 +289,7 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
           <DialogHeader>
             <DialogTitle className="text-xl font-medium">Purchase {token.symbol} Tokens</DialogTitle>
           </DialogHeader>
-          
+
           <div className="py-4 space-y-4">
             <div className="flex justify-between">
               <div>
@@ -300,7 +301,7 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
                 <p className="font-semibold">{token.availableSupply.toLocaleString()} tokens</p>
               </div>
             </div>
-            
+
             <div>
               <label htmlFor="amount" className="block text-sm font-medium text-cropchain-medium mb-1">
                 Amount to Purchase
@@ -315,7 +316,7 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
                 className="w-full border-cropchain-gray/50 focus:border-cropchain-green focus:ring-cropchain-green"
               />
             </div>
-            
+
             <div className="bg-cropchain-green-light p-4 rounded-md">
               <div className="flex justify-between">
                 <p className="text-cropchain-medium">Total Cost</p>
@@ -324,14 +325,14 @@ export function TokenCard({ token, onPurchase, viewOnly = false, owned = 0 }: To
               <div className="flex justify-between mt-1">
                 <p className="text-cropchain-medium">Projected Return</p>
                 <p className="font-semibold text-cropchain-green">
-                  ${(purchaseAmount * token.price * (1 + token.projectedYield/1000)).toFixed(2)}*
+                  ${(purchaseAmount * token.price * (1 + token.projectedYield / 1000)).toFixed(2)}*
                 </p>
               </div>
               <p className="text-xs text-cropchain-medium mt-2">*Estimated value at harvest, subject to market conditions</p>
             </div>
           </div>
-          
-          <Button 
+
+          <Button
             className="w-full bg-cropchain-green hover:bg-cropchain-green/90 text-white"
             onClick={handlePurchase}
             disabled={isSubmitting}

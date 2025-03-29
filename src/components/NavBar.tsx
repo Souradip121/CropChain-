@@ -1,22 +1,24 @@
+'use client';
 
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import WalletConnect from '@/components/WalletConnect';
 import { useWalletConnection } from '@/utils/web3';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { 
-  DropdownMenu, 
-  DropdownMenuContent, 
-  DropdownMenuItem, 
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
 export function NavBar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
   const { isConnected } = useWalletConnection();
 
   useEffect(() => {
@@ -29,21 +31,21 @@ export function NavBar() {
   }, []);
 
   const isActive = (path: string) => {
-    return location.pathname === path;
+    return pathname === path;
   };
 
   return (
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 md:px-10',
-        isScrolled 
-          ? 'py-3 bg-white/80 dark:bg-cropchain-dark/80 backdrop-blur-md shadow-sm' 
+        isScrolled
+          ? 'py-3 bg-white/80 dark:bg-cropchain-dark/80 backdrop-blur-md shadow-sm'
           : 'py-5 bg-transparent'
       )}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <Link 
-          to="/" 
+        <Link
+          href="/"
           className="text-2xl font-display font-semibold tracking-tight text-cropchain-dark dark:text-white flex items-center"
         >
           <div className="w-10 h-10 mr-2 rounded-lg bg-cropchain-green flex items-center justify-center">
@@ -55,35 +57,35 @@ export function NavBar() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-1">
           <Link
-            to="/"
+            href="/"
             className={cn(
               'px-4 py-2 rounded-md text-sm font-medium transition-colors',
-              isActive('/') 
-                ? 'text-cropchain-green' 
+              isActive('/')
+                ? 'text-cropchain-green'
                 : 'text-cropchain-medium hover:text-cropchain-dark dark:hover:text-white'
             )}
           >
             Home
           </Link>
           <Link
-            to="/marketplace"
+            href="/marketplace"
             className={cn(
               'px-4 py-2 rounded-md text-sm font-medium transition-colors',
-              isActive('/marketplace') 
-                ? 'text-cropchain-green' 
+              isActive('/marketplace')
+                ? 'text-cropchain-green'
                 : 'text-cropchain-medium hover:text-cropchain-dark dark:hover:text-white'
             )}
           >
             Marketplace
           </Link>
-          
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
                 className={cn(
                   'px-4 py-2 rounded-md text-sm font-medium transition-colors flex items-center',
                   (isActive('/farmer-dashboard') || isActive('/investor-dashboard'))
-                    ? 'text-cropchain-green' 
+                    ? 'text-cropchain-green'
                     : 'text-cropchain-medium hover:text-cropchain-dark dark:hover:text-white'
                 )}
               >
@@ -93,7 +95,7 @@ export function NavBar() {
             <DropdownMenuContent>
               <DropdownMenuItem asChild>
                 <Link
-                  to="/farmer-dashboard"
+                  href="/farmer-dashboard"
                   className={cn(
                     'w-full px-4 py-2 text-sm',
                     isActive('/farmer-dashboard') && 'font-medium text-cropchain-green'
@@ -104,7 +106,7 @@ export function NavBar() {
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
-                  to="/investor-dashboard"
+                  href="/investor-dashboard"
                   className={cn(
                     'w-full px-4 py-2 text-sm',
                     isActive('/investor-dashboard') && 'font-medium text-cropchain-green'
@@ -119,9 +121,9 @@ export function NavBar() {
 
         <div className="hidden md:flex items-center space-x-4">
           <WalletConnect />
-          
+
           {isConnected && (
-            <Link to={"/investor-dashboard"}>
+            <Link href="/investor-dashboard">
               <Button variant="outline" className="border-cropchain-gray hover:bg-cropchain-gray/30">
                 My Portfolio
               </Button>
@@ -132,7 +134,7 @@ export function NavBar() {
         {/* Mobile Menu Button */}
         <div className="flex md:hidden items-center space-x-4">
           <WalletConnect />
-          
+
           <Button
             variant="ghost"
             size="sm"
@@ -152,7 +154,7 @@ export function NavBar() {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 glass-effect border-t border-cropchain-gray/30 py-4 px-6 flex flex-col space-y-4 animate-slide-up">
           <Link
-            to="/"
+            href="/"
             onClick={() => setMobileMenuOpen(false)}
             className={cn(
               'px-4 py-3 rounded-md text-sm font-medium transition-colors',
@@ -162,7 +164,7 @@ export function NavBar() {
             Home
           </Link>
           <Link
-            to="/marketplace"
+            href="/marketplace"
             onClick={() => setMobileMenuOpen(false)}
             className={cn(
               'px-4 py-3 rounded-md text-sm font-medium transition-colors',
@@ -172,7 +174,7 @@ export function NavBar() {
             Marketplace
           </Link>
           <Link
-            to="/farmer-dashboard"
+            href="/farmer-dashboard"
             onClick={() => setMobileMenuOpen(false)}
             className={cn(
               'px-4 py-3 rounded-md text-sm font-medium transition-colors',
@@ -182,7 +184,7 @@ export function NavBar() {
             Farmer Dashboard
           </Link>
           <Link
-            to="/investor-dashboard"
+            href="/investor-dashboard"
             onClick={() => setMobileMenuOpen(false)}
             className={cn(
               'px-4 py-3 rounded-md text-sm font-medium transition-colors',
@@ -191,10 +193,10 @@ export function NavBar() {
           >
             Investor Dashboard
           </Link>
-          
+
           {isConnected && (
             <Link
-              to="/investor-dashboard"
+              href="/investor-dashboard"
               onClick={() => setMobileMenuOpen(false)}
               className="w-full"
             >
